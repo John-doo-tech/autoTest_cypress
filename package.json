@@ -1,0 +1,20 @@
+{
+  "name": "autotest_cypress",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "bs:init": "browserstack-cypress init",
+    "bs:runTest:prod": "browserstack-cypress run --sync --cypress-config-file env.prod.json --username johnbright_ZbGWt9 --key zqGBYk6t3qspQE9SayQq",
+    "cy:open": "cypress open --browser edge --config-file env.prod.json",
+    "cy:conduit:prod:chrome": "cypress run --headed --browser chrome --config-file env.prod.json --spec 'cypress/integration/conduitTest/**.spec.js'",
+    "cy:conduit:prod:edge": "cypress run --headed --browser edge --config-file env.prod.json --spec 'cypress/integration/conduitTest/**.spec.js'",
+    "cy:conduit:chrome": "cypress run --browser chrome --spec 'cypress/integration/conduitTest/**.spec.js'"
+  },
+  "author": "JohnDoo",
+  "license": "ISC",
+  "devDependencies": {
+    "browserstack-cypress-cli": "^1.12.1",
+    "cypress": "^9.5.1",
+    "typescript": "^4.6.2"
+  }
+}
