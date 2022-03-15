@@ -2,27 +2,32 @@ version: 2.1
 orbs:
   node: circleci/node@4.7
   cypress: cypress-io/cypress@1
-
+executors:
+  with-chrome-and-firefox:
+    docker:
+      - image: "cypress/browsers:node14.17.0-chrome88-ff89"
+    resource_class: medium+
   
 workflows:
   build:
     jobs:
       - cypress/install:
-          # executor: with-chrome-and-firefox
+          executor: with-chrome-and-firefox
           build: "npm i"
           post-steps:
-            - run:
-                name: install chrome
-                command: |
-                  apt-get install wget
-                  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-                  dpkg -i google-chrome-stable_current_amd64.deb
+            # - run:
+            #     name: install chrome
+            #     command: |
+            #       apt-get install wget
+            #       wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            #       dpkg -i google-chrome-stable_current_amd64.deb
             - run:
                 name: Print Cypress info
                 command: npm run cy:info
       - cypress/run:
           requires:
             - cypress/install
+          executor: with-chrome-and-firefox
           record: true # record results on Cypress Dashboard
           parallel: true # split all specs across machines
           parallelism: 1 # use 4 CircleCI machines to finish quickly
