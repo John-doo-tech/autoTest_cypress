@@ -16,7 +16,7 @@ workflows:
       #     group: 'all tests' # name this group "all tests" on the dashboard
           # start: 'npm run cy:conduit:prod:chrome' # start server before running tests
       - build-and-test:
-        steps:
+          steps:
           - runTest:
-            name: Run tests
-            command: npm run cy:conduit:prod:chrome 
+              name: Run tests
+              command: npm run cy:conduit:prod:chrome 
