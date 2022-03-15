@@ -1,17 +1,22 @@
 version: 2.1
 orbs:
+  node: circleci/node@4.7
   cypress: cypress-io/cypress@1
 workflows:
   build:
     jobs:
       - cypress/install:
           build: 'npm i' # run a custom app build step
-      - cypress/run:
-          requires:
-            - cypress/install
-          record: true # record results on Cypress Dashboard
-          parallel: true # split all specs across machines
-          parallelism: 1 # use 4 CircleCI machines to finish quickly
-          group: 'all tests' # name this group "all tests" on the dashboard
-          run: npm run cy:conduit:prod:chrome
+      # - cypress/run:
+      #     requires:
+      #       - cypress/install
+      #     record: true # record results on Cypress Dashboard
+      #     parallel: true # split all specs across machines
+      #     parallelism: 1 # use 4 CircleCI machines to finish quickly
+      #     group: 'all tests' # name this group "all tests" on the dashboard
           # start: 'npm run cy:conduit:prod:chrome' # start server before running tests
+      - build-and-test:
+        steps:
+          - runTest:
+            name: Run tests
+            command: npm run cy:conduit:prod:chrome 
