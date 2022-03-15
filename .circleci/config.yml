@@ -2,22 +2,35 @@ version: 2.1
 orbs:
   node: circleci/node@4.7
   cypress: cypress-io/cypress@1
+jobs:
+  setup-browser:
+    steps:
+      - run:
+          name: setup browsers
+          command: |
+            apt-get install wget
+            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            dpkg -i google-chrome-stable_current_amd64.deb
 workflows:
   build:
     jobs:
       - cypress/install:
           build: 'npm i' # run a custom app build step
+      - setup-browser:
+          requires:
+            - cypress/install
       - cypress/run:
           requires:
             - cypress/install
+            - setup-browser
           record: true # record results on Cypress Dashboard
           parallel: true # split all specs across machines
           parallelism: 1 # use 4 CircleCI machines to finish quickly
           group: 'all tests' # name this group "all tests" on the dashboard
-          install-command: |
-            apt-get install wget
-            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            dpkg -i google-chrome-stable_current_amd64.deb
+          # install-command: |
+          #   apt-get install wget
+          #   wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          #   dpkg -i google-chrome-stable_current_amd64.deb
           command: 'npm run cy:conduit:prod:chrome'
       # - build-and-test:
       #     steps:
