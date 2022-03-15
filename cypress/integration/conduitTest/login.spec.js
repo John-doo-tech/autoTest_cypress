@@ -1,5 +1,5 @@
 ///<reference types="Cypress"/>
-let host = Cypress.env().conduit.host
+let host = Cypress.env().conduit.ui_host
 let account = Cypress.env().conduit.account[0];
 
 describe("Register", () => {
