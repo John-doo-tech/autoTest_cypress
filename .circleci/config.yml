@@ -12,6 +12,12 @@ workflows:
           build: "npm i"
           post-steps:
             - run:
+                name: install chrome
+                command: |
+                  apt-get install wget
+                  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+                  dpkg -i google-chrome-stable_current_amd64.deb
+            - run:
                 name: Print Cypress info
                 command: npm run cy:info
       - cypress/run:
