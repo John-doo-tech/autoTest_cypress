@@ -8,13 +8,13 @@ workflows:
   build:
     jobs:
       - cypress/install:
-        name: "Setup Linux"
-        # executor: with-chrome-and-firefox
-        build: "npm i"
-        post-steps:
-          - run:
-              name: Print Cypress info
-              command: npm run cy:info
+          name: "Setup Linux"
+          # executor: with-chrome-and-firefox
+          build: "npm i"
+          post-steps:
+            - run:
+                name: Print Cypress info
+                command: npm run cy:info
       - cypress/run:
           requires:
             - cypress/install
