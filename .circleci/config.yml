@@ -2,15 +2,8 @@ version: 2.1
 orbs:
   node: circleci/node@4.7
   cypress: cypress-io/cypress@1
-jobs:
-  setup-browser:
-    steps:
-      - run:
-          name: setup browsers
-          command: |
-            apt-get install wget
-            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-            dpkg -i google-chrome-stable_current_amd64.deb
+
+  
 workflows:
   build:
     jobs:
@@ -19,6 +12,13 @@ workflows:
       - setup-browser:
           requires:
             - cypress/install
+          steps:
+            - run:
+                name: setup browsers
+                command: |
+                  apt-get install wget
+                  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+                  dpkg -i google-chrome-stable_current_amd64.deb
       - cypress/run:
           requires:
             - cypress/install
