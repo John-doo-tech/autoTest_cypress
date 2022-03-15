@@ -30,7 +30,7 @@ workflows:
           group: 'all tests' # name this group "all tests" on the dashboard
           command: 'npm run cy:conduit:prod:chrome'
       - cypress/run:
-          name: Run tests with Chrome
+          name: Run tests with Firefox
           requires:
             - cypress/install
           executor: with-chrome-and-firefox
