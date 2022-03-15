@@ -8,7 +8,6 @@ workflows:
   build:
     jobs:
       - cypress/install:
-          name: "Setup Linux"
           # executor: with-chrome-and-firefox
           build: "npm i"
           post-steps:
