@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "cy:info": "cypress info",
     "cy:open": "cypress open --browser edge --config-file env.prod.json",
     "cy:conduit:prod:chrome": "cypress run --headed --browser chrome --config-file env.prod.json --spec 'cypress/integration/conduitTest/**.spec.js' --record --key e989868e-0803-4ec1-9295-bfe74fe28c9d",
     "cy:conduit:prod:edge": "cypress run --headed --browser edge --config-file env.prod.json --spec 'cypress/integration/conduitTest/**.spec.js'",

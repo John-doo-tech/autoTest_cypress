@@ -8,17 +8,13 @@ workflows:
   build:
     jobs:
       - cypress/install:
-          build: 'npm i' # run a custom app build step
-      - setup-browser:
-          requires:
-            - cypress/install
-          steps:
-            - run:
-                name: setup browsers
-                command: |
-                  apt-get install wget
-                  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-                  dpkg -i google-chrome-stable_current_amd64.deb
+        name: "Setup Linux"
+        # executor: with-chrome-and-firefox
+        build: "npm i"
+        post-steps:
+          - run:
+              name: Print Cypress info
+              command: npm run cy:info
       - cypress/run:
           requires:
             - cypress/install
@@ -27,13 +23,35 @@ workflows:
           parallel: true # split all specs across machines
           parallelism: 1 # use 4 CircleCI machines to finish quickly
           group: 'all tests' # name this group "all tests" on the dashboard
-          # install-command: |
-          #   apt-get install wget
-          #   wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          #   dpkg -i google-chrome-stable_current_amd64.deb
           command: 'npm run cy:conduit:prod:chrome'
-      # - build-and-test:
+
+      # - cypress/install:
+      #     build: 'npm i' # run a custom app build step
+      # - setup-browser:
+      #     requires:
+      #       - cypress/install
       #     steps:
-      #     - runTest:
-      #         name: Run tests
-      #         command: npm run cy:conduit:prod:chrome 
+      #       - run:
+      #           name: setup browsers
+      #           command: |
+      #             apt-get install wget
+      #             wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      #             dpkg -i google-chrome-stable_current_amd64.deb
+      # - cypress/run:
+      #     requires:
+      #       - cypress/install
+      #       - setup-browser
+      #     record: true # record results on Cypress Dashboard
+      #     parallel: true # split all specs across machines
+      #     parallelism: 1 # use 4 CircleCI machines to finish quickly
+      #     group: 'all tests' # name this group "all tests" on the dashboard
+      #     # install-command: |
+      #     #   apt-get install wget
+      #     #   wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      #     #   dpkg -i google-chrome-stable_current_amd64.deb
+      #     command: 'npm run cy:conduit:prod:chrome'
+      # # - build-and-test:
+      # #     steps:
+      # #     - runTest:
+      # #         name: Run tests
+      # #         command: npm run cy:conduit:prod:chrome 
